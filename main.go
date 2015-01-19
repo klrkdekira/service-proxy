@@ -1,19 +1,48 @@
 package main
 
 import (
+	"flag"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/codegangsta/negroni"
 )
 
-var targetURL = "https://sinar-malaysia.popit.mysociety.org"
+var host, upstream string
+
+func init() {
+	flag.StringVar(&upstream, "upstream", "", "upstream service url (example: https://popit.mysociety.org)")
+	flag.StringVar(&host, "http", "0.0.0.0:8080", "<addr>:<port> to listen on")
+	flag.Parse()
+
+	envUpstream := os.Getenv("upstream")
+	if envUpstream != "" {
+		upstream = envUpstream
+	}
+
+	envHost := os.Getenv("http")
+	if envHost != "" {
+		host = envHost
+	}
+
+	if upstream == "" {
+		log.Fatal("requires `upstream` parameter")
+	}
+
+	if host == "" {
+		log.Fatal("requires `http` parameter")
+	}
+
+	upstream = strings.TrimSuffix(upstream, "/")
+}
 
 func main() {
 	proxy := negroni.New(negroni.NewLogger(), negroni.NewRecovery())
 	proxy.UseHandler(http.HandlerFunc(proxyHandler))
-	proxy.Run(":8080")
+	proxy.Run(host)
 }
 
 func proxyHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +53,7 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	req, err = http.NewRequest(r.Method, targetURL+r.RequestURI, r.Body)
+	req, err = http.NewRequest(r.Method, upstream+r.RequestURI, r.Body)
 	if err != nil {
 		log.Println(err)
 	}

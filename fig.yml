@@ -1,0 +1,6 @@
+serviceproxy:
+  image: sinar/service-proxy
+  ports:
+    - "127.0.0.1:8080:8080"
+   environment:
+    upstream: "https://sinar-malaysia.popit.mysociety.org"
