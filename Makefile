@@ -1,6 +1,6 @@
 all:
 	go clean
 	go build
-	strip go-api-mirror
+	strip service-proxy
 	docker build -t sinar/service-proxy .
 	go clean

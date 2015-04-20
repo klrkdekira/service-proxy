@@ -3,10 +3,11 @@ MAINTAINER Chee Leong <klrkdekira@gmail.com>
 
 RUN apt-get update -q && \
     apt-get upgrade -qy && \
+    apt-get install -qy ca-certificates && \
     apt-get clean
 
-ADD go-api-mirror /usr/bin/go-api-mirror
+ADD service-proxy /usr/bin/service-proxy
 
 EXPOSE 8080
 
-CMD ["/usr/bin/go-api-mirror"]
+CMD ["/usr/bin/service-proxy"]
