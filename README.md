@@ -1,2 +1,4 @@
-# go-api-mirror
-API mirror for PopIt development
+# Sherpa
+CORSing APIs since forever...
+
+Check `docker-compose.yml` for usage.
