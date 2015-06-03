@@ -3,6 +3,6 @@ version:=$(shell date +%Y.%m.%d)
 all:
 	go clean
 	go build
-	strip service-proxy
+	strip sherpa
 	docker build -t ${image} .
 	go clean

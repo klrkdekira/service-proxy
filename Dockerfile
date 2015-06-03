@@ -6,8 +6,8 @@ RUN apt-get update -q && \
     apt-get install -qy ca-certificates && \
     apt-get clean
 
-ADD service-proxy /usr/bin/service-proxy
+ADD sherpa /usr/bin/sherpa
 
 EXPOSE 8080
 
-CMD ["/usr/bin/service-proxy"]
+CMD ["/usr/bin/sherpa"]
