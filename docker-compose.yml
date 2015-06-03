@@ -1,9 +1,9 @@
 proxy:
-  image: sinar/sherpa
+  image: sinar/sherpa:latest
   ports:
     - "127.0.0.1:8080:8080"
   volumes:
-    - ./web:/data/ui
+    - ./web:/data/ui # please replace ./web
   environment:
-    UI: "/data/ui"
-    UPSTREAMS: "https://sinar-malaysia.popit.mysociety.org/api/"
+    UI: "/data/ui" # don't change this
+    UPSTREAMS: "https://sinar-malaysia.popit.mysociety.org/api/" # specially for me
